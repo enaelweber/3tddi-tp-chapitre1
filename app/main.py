@@ -1,6 +1,9 @@
-def main():
-    print("Hello from tp1-api-rest!")
+from fastapi import FastAPI
+from app.routers import students
 
+app = FastAPI(title="Students API")
+app.include_router(students.router)
 
-if __name__ == "__main__":
-    main()
+@app.get("/")
+def root():
+    return {"status": "ok"}
