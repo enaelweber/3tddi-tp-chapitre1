@@ -1,8 +1,9 @@
-from enum import Enum
+from enum import StrEnum
+
 from pydantic import BaseModel, EmailStr, Field
 
 
-class FieldEnum(str, Enum):
+class FieldEnum(StrEnum):
     INFORMATIQUE = "Informatique"
     MATHEMATIQUES = "Mathématiques"
     PHYSIQUE = "Physique"
