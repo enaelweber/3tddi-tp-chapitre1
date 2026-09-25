@@ -4,6 +4,27 @@ from app.repository import StudentRepository, get_repository
 
 router = APIRouter(prefix="/students", tags=["students"])
 
+@router.get("/stats")
+def get_stats(repo: StudentRepository = Depends(get_repository)):
+    students = repo.list_all()
+    if not students:
+        return {
+            "totalStudents": 0,
+            "averageGrade": 0,
+            "studentsByField": {},
+            "bestStudent": None,
+        }
+    grades = [s.grade for s in students]
+    by_field: dict[str, int] = {}
+    for s in students:
+        by_field[s.field] = by_field.get(s.field, 0) + 1
+    return {
+        "totalStudents": len(students),
+        "averageGrade": round(sum(grades) / len(grades), 2),
+        "studentsByField": by_field,
+        "bestStudent": max(grades),
+    }
+
 @router.get("", response_model=list[Student])
 def list_students(repo: StudentRepository = Depends(get_repository)):
     return repo.list_all()
