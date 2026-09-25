@@ -5,17 +5,6 @@ class StudentRepository:
         self._students: list[Student] = []
         self._next_id = 1
 
-    def reset(self):
-        self._students = []
-        self._next_id = 1
-
-    def seed(self, students_data: list[StudentCreate]):
-        for data in students_data:
-            self.create(data)
-
-    def list_all(self) -> list[Student]:
-        return self._students
-
     def get(self, student_id: int) -> Student | None:
         return next((s for s in self._students if s.id == student_id), None)
 
@@ -40,13 +29,16 @@ class StudentRepository:
             return False
         self._students.remove(existing)
         return True
+        
+    def list_all(self) -> list[Student]:
+        return self._students
+
+    def email_exists(self, email: str, exclude_id: int | None = None) -> bool:
+        return any(s.email == email and s.id != exclude_id for s in self._students)
 
     def search(self, q: str) -> list[Student]:
         q = q.lower()
-        return [
-            s for s in self._students
-            if q in s.firstName.lower() or q in s.lastName.lower() or q in s.email.lower()
-        ]
+        return [s for s in self._students if q in s.firstName.lower() or q in s.lastName.lower()]
 
 # instance unique utilisée par l'app
 repository = StudentRepository()
