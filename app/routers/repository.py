@@ -29,6 +29,9 @@ class StudentRepository:
             return False
         self._students.remove(existing)
         return True
+        
+    def list_all(self) -> list[Student]:
+        return self._students
 
 # instance unique utilisée par l'app
 repository = StudentRepository()
