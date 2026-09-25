@@ -36,9 +36,9 @@ def test_get_student_by_invalid_id(client):
 
 def test_post_student_valid_data(client):
     payload = {
-        "firstName": "Jean",
-        "lastName": "Dupont",
-        "email": "jean.dupont@example.com",
+        "firstName": "Alice",
+        "lastName": "Durelle",
+        "email": "alice.durelle@example.com",
         "grade": 14.0,
         "field": "Informatique",
     }
@@ -46,7 +46,7 @@ def test_post_student_valid_data(client):
     assert response.status_code == 201
     data = response.json()
     assert "id" in data
-    assert data["firstName"] == "Jean"
+    assert data["firstName"] == "Alice"
 
 
 def test_post_student_missing_required_field(client):
