@@ -25,6 +25,12 @@ def get_stats(repo: StudentRepository = Depends(get_repository)):
         "bestStudent": max(grades),
     }
 
+@router.get("/search")
+def search_students(q: str = "", repo: StudentRepository = Depends(get_repository)):
+    if not q.strip():
+        raise HTTPException(status_code=400, detail="Query parameter 'q' is required")
+    return repo.search(q)
+
 @router.get("", response_model=list[Student])
 def list_students(repo: StudentRepository = Depends(get_repository)):
     return repo.list_all()

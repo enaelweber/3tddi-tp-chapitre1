@@ -36,6 +36,10 @@ class StudentRepository:
     def email_exists(self, email: str, exclude_id: int | None = None) -> bool:
         return any(s.email == email and s.id != exclude_id for s in self._students)
 
+    def search(self, q: str) -> list[Student]:
+        q = q.lower()
+        return [s for s in self._students if q in s.firstName.lower() or q in s.lastName.lower()]
+
 # instance unique utilisée par l'app
 repository = StudentRepository()
 
