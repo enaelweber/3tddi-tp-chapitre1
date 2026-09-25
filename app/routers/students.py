@@ -28,3 +28,9 @@ def update_student(student_id: int, data: StudentUpdate, repo: StudentRepository
     if repo.email_exists(data.email, exclude_id=student_id):
         raise HTTPException(status_code=409, detail="Email already exists")
     return repo.update(student_id, data)
+
+@router.delete("/{student_id}")
+def delete_student(student_id: int, repo: StudentRepository = Depends(get_repository)):
+    if not repo.delete(student_id):
+        raise HTTPException(status_code=404, detail="Student not found")
+    return {"message": "Student deleted successfully"}
