@@ -33,6 +33,9 @@ class StudentRepository:
     def list_all(self) -> list[Student]:
         return self._students
 
+    def email_exists(self, email: str, exclude_id: int | None = None) -> bool:
+        return any(s.email == email and s.id != exclude_id for s in self._students)
+
 # instance unique utilisée par l'app
 repository = StudentRepository()
 
