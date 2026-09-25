@@ -44,6 +44,10 @@ class StudentRepository:
         for data in students_data:
             self.create(data)
 
+    def reset(self):
+        self._students = []
+        self._next_id = 1
+
 # instance unique utilisée par l'app
 repository = StudentRepository()
 
