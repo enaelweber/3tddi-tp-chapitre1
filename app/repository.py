@@ -40,6 +40,10 @@ class StudentRepository:
         q = q.lower()
         return [s for s in self._students if q in s.firstName.lower() or q in s.lastName.lower()]
 
+    def seed(self, students_data: list[StudentCreate]):
+        for data in students_data:
+            self.create(data)
+
 # instance unique utilisée par l'app
 repository = StudentRepository()
 
