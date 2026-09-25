@@ -1,6 +1,7 @@
 from app.seed_data import SEED_STUDENTS
 
-# GET 
+# GET
+
 
 def test_get_students_returns_200_and_list(client):
     response = client.get("/students")
@@ -32,7 +33,8 @@ def test_get_student_by_invalid_id(client):
     assert response.status_code == 422
 
 
-# POST 
+# POST
+
 
 def test_post_student_valid_data(client):
     payload = {
@@ -84,7 +86,8 @@ def test_post_student_duplicate_email(client):
     assert response.status_code == 409
 
 
-# PUT 
+# PUT
+
 
 def test_put_student_valid_data(client):
     payload = {
@@ -111,7 +114,8 @@ def test_put_student_nonexistent_id(client):
     assert response.status_code == 404
 
 
-# DELETE 
+# DELETE
+
 
 def test_delete_student_valid_id(client):
     response = client.delete("/students/1")
@@ -124,6 +128,7 @@ def test_delete_student_nonexistent_id(client):
 
 
 # stats, search
+
 
 def test_get_stats(client):
     response = client.get("/students/stats")

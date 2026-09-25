@@ -1,11 +1,13 @@
 from enum import Enum
 from pydantic import BaseModel, EmailStr, Field
 
+
 class FieldEnum(str, Enum):
     INFORMATIQUE = "Informatique"
     MATHEMATIQUES = "Mathématiques"
     PHYSIQUE = "Physique"
     CHIMIE = "Chimie"
+
 
 class StudentBase(BaseModel):
     firstName: str = Field(min_length=2)
@@ -15,11 +17,14 @@ class StudentBase(BaseModel):
     field: str  # filière
     field: FieldEnum
 
+
 class StudentCreate(StudentBase):
     pass
 
+
 class StudentUpdate(StudentBase):
     pass  # PUT = remplacement complet
+
 
 class Student(StudentBase):
     id: int

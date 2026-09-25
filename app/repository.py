@@ -1,6 +1,7 @@
 from app.models import Student, StudentCreate, StudentUpdate
 from app.seed_data import SEED_STUDENTS
 
+
 class StudentRepository:
     def __init__(self):
         self._students: list[Student] = []
@@ -31,7 +32,7 @@ class StudentRepository:
             return False
         self._students.remove(existing)
         return True
-        
+
     def list_all(self) -> list[Student]:
         return self._students
 
@@ -52,8 +53,10 @@ class StudentRepository:
     def reset(self):
         self._seed()
 
+
 # instance unique utilisée par l'app
 repository = StudentRepository()
+
 
 def get_repository() -> StudentRepository:
     return repository
