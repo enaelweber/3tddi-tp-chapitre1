@@ -20,3 +20,11 @@ def create_student(data: StudentCreate, repo: StudentRepository = Depends(get_re
     if repo.email_exists(data.email):
         raise HTTPException(status_code=409, detail="Email already exists")
     return repo.create(data)
+
+@router.put("/{student_id}", response_model=Student)
+def update_student(student_id: int, data: StudentUpdate, repo: StudentRepository = Depends(get_repository)):
+    if not repo.get(student_id):
+        raise HTTPException(status_code=404, detail="Student not found")
+    if repo.email_exists(data.email, exclude_id=student_id):
+        raise HTTPException(status_code=409, detail="Email already exists")
+    return repo.update(student_id, data)
