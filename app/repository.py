@@ -1,9 +1,11 @@
 from app.models import Student, StudentCreate, StudentUpdate
+from app.seed_data import SEED_STUDENTS
 
 class StudentRepository:
     def __init__(self):
         self._students: list[Student] = []
         self._next_id = 1
+        self._seed()
 
     def get(self, student_id: int) -> Student | None:
         return next((s for s in self._students if s.id == student_id), None)
@@ -40,13 +42,15 @@ class StudentRepository:
         q = q.lower()
         return [s for s in self._students if q in s.firstName.lower() or q in s.lastName.lower()]
 
-    def seed(self, students_data: list[StudentCreate]):
-        for data in students_data:
-            self.create(data)
-
-    def reset(self):
+    def _seed(self):
         self._students = []
         self._next_id = 1
+        for data in SEED_STUDENTS:
+            self._students.append(Student(id=self._next_id, **data))
+            self._next_id += 1
+
+    def reset(self):
+        self._seed()
 
 # instance unique utilisée par l'app
 repository = StudentRepository()
