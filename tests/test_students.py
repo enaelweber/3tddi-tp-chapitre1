@@ -101,8 +101,8 @@ def test_put_student_valid_data(client):
 
 def test_put_student_nonexistent_id(client):
     payload = {
-        "firstName": "X",
-        "lastName": "Y",
+        "firstName": "XXX",
+        "lastName": "YYY",
         "email": "x.y@example.com",
         "grade": 10.0,
         "field": "Informatique",
