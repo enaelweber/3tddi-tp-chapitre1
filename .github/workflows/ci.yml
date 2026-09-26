@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+
+  pull_request:
+    branches: [main]
+
+  workflow_dispatch:  
+
+permissions:
+  contents: read
+
+jobs:
+
+  test:
+    name: Test (Python ${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.12"]
+      fail-fast: false   
+
+    steps:
+      - name: Checkout du code
+        uses: actions/checkout@v4
+
+      - name: Installer uv
+        uses: astral-sh/setup-uv@v3
+
+      - name: Installer Python ${{ matrix.python-version }}
+        run: uv python install ${{ matrix.python-version }}
+
+      - name: Installation des dépendances
+        run: uv sync --all-extras --dev --python ${{ matrix.python-version }}
+
+      - name: Vérification du code (lint)
+        run: uv run ruff check .
+
+      - name: Vérification du formatage
+        run: uv run ruff format --check .
+
+      - name: Tests unitaires
+        run: uv run pytest -v
