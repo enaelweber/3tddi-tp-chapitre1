@@ -15,7 +15,6 @@ class StudentBase(BaseModel):
     lastName: str = Field(min_length=2)
     email: EmailStr
     grade: float = Field(ge=0, le=20)  # adapte l'échelle si besoin
-    field: str  # filière
     field: FieldEnum
 
 
