@@ -1,4 +1,3 @@
-
 SEED_STUDENTS = [
     {
         "firstName": "Jean",
